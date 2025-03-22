@@ -93,6 +93,13 @@ const GroceryList: React.FC = () => {
         .eq('id', id);
 
       if (error) throw error;
+
+      // Update local state immediately
+      setItems(currentItems => 
+        currentItems.map(item =>
+          item.id === id ? { ...item, completed: !completed } : item
+        )
+      );
     } catch (error) {
       console.error('Error toggling item:', error);
     }
@@ -106,6 +113,11 @@ const GroceryList: React.FC = () => {
         .eq('id', id);
 
       if (error) throw error;
+
+      // Update local state immediately
+      setItems(currentItems => 
+        currentItems.filter(item => item.id !== id)
+      );
     } catch (error) {
       console.error('Error removing item:', error);
     }
