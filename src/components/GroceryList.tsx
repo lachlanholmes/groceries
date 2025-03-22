@@ -74,6 +74,11 @@ const GroceryList: React.FC = () => {
         .single();
 
       if (error) throw error;
+      
+      // Add the new item to the local state immediately
+      if (data) {
+        setItems(currentItems => [data, ...currentItems]);
+      }
       setNewItem('');
     } catch (error) {
       console.error('Error adding item:', error);
