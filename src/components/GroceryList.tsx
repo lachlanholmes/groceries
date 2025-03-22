@@ -29,8 +29,8 @@ const GroceryList: React.FC = () => {
       .channel('grocery_changes')
       .on('postgres_changes', 
         { event: '*', schema: 'public', table: 'grocery_items' },
-        (payload) => {
-          fetchItems(); // Refresh the list when changes occur
+        () => { 
+          fetchItems();
         }
       )
       .subscribe();
