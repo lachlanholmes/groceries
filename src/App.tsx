@@ -5,7 +5,7 @@ import GroceryList from './components/GroceryList';
 import './App.css';
 
 const AuthenticatedApp = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, signOut } = useAuth();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -18,6 +18,12 @@ const AuthenticatedApp = () => {
   return (
     <div className="App">
       <GroceryList />
+      <footer className="app-footer">
+        <span>Signed in as: {user.email}</span>
+        <button onClick={signOut} className="logout-button">
+          Sign Out
+        </button>
+      </footer>
     </div>
   );
 };
