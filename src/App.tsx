@@ -4,14 +4,17 @@
  */
 
 import React from 'react';
+import { AuthProvider } from './contexts/AuthContext';
 import GroceryList from './components/GroceryList';
 import './App.css';
 
-const App: React.FC = () => {
+const App = () => {
   return (
-    <div className="App">
-      <GroceryList />
-    </div>
+    <AuthProvider>
+      <div className="App">
+        <GroceryList />
+      </div>
+    </AuthProvider>
   );
 };
 

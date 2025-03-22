@@ -1,20 +1,43 @@
 /**
- * Arrr! This be the main component fer keepin' track of our ship's provisions!
- * A mighty fine list of groceries that any seafarin' crew would need fer their voyage.
+ * A shared grocery list component that allows authorized users to collaborate
  */
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { GroceryItem } from '../types/database';
+import { useAuth } from '../contexts/AuthContext';
 import './GroceryList.css';
+
+interface GroceryItem {
+  id: number;
+  created_at: string;
+  name: string;
+  completed: boolean;
+  added_by: string;
+}
 
 const GroceryList: React.FC = () => {
   const [items, setItems] = useState<GroceryItem[]>([]);
   const [newItem, setNewItem] = useState('');
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     fetchItems();
+    
+    // Subscribe to realtime changes
+    const channel = supabase
+      .channel('grocery_changes')
+      .on('postgres_changes', 
+        { event: '*', schema: 'public', table: 'grocery_items' },
+        (payload) => {
+          fetchItems(); // Refresh the list when changes occur
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchItems = async () => {
@@ -26,9 +49,9 @@ const GroceryList: React.FC = () => {
 
       if (error) throw error;
       setItems(data || []);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching items:', error);
-    } finally {
       setLoading(false);
     }
   };
@@ -44,14 +67,13 @@ const GroceryList: React.FC = () => {
           {
             name: newItem,
             completed: false,
-            user_id: 'anonymous' // In a real app, this would come from auth
+            added_by: user?.email
           }
         ])
         .select()
         .single();
 
       if (error) throw error;
-      setItems([data, ...items]);
       setNewItem('');
     } catch (error) {
       console.error('Error adding item:', error);
@@ -66,9 +88,6 @@ const GroceryList: React.FC = () => {
         .eq('id', id);
 
       if (error) throw error;
-      setItems(items.map(item =>
-        item.id === id ? { ...item, completed: !completed } : item
-      ));
     } catch (error) {
       console.error('Error toggling item:', error);
     }
@@ -82,26 +101,25 @@ const GroceryList: React.FC = () => {
         .eq('id', id);
 
       if (error) throw error;
-      setItems(items.filter(item => item.id !== id));
     } catch (error) {
       console.error('Error removing item:', error);
     }
   };
 
   if (loading) {
-    return <div className="loading">Loading your provisions...</div>;
+    return <div className="loading">Loading shared grocery list...</div>;
   }
 
   return (
     <div className="grocery-list">
-      <h1>🏴‍☠️ Ship's Grocery List</h1>
+      <h1>Our Shared Grocery List</h1>
       
       <form onSubmit={addItem}>
         <input
           type="text"
           value={newItem}
           onChange={(e) => setNewItem(e.target.value)}
-          placeholder="Add new provision..."
+          placeholder="Add new item..."
         />
         <button type="submit">Add to List</button>
       </form>
@@ -116,6 +134,9 @@ const GroceryList: React.FC = () => {
             />
             <span className={item.completed ? 'completed' : ''}>
               {item.name}
+            </span>
+            <span className="added-by">
+              Added by: {item.added_by}
             </span>
             <button onClick={() => removeItem(item.id)}>❌</button>
           </li>
