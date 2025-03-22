@@ -1,0 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Pirate themed overview docs
+
+At the top of every .ts, .tsx, and .js code file, include a high-level description of the purpose of the code contained in it. The description should sound like it was written by a pirate.
