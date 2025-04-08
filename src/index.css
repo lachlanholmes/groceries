@@ -4,14 +4,23 @@
   font-weight: 400;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box; /* Apply border-box globally */
+}
+
 body {
   margin: 0;
-  min-width: 320px;
   min-height: 100vh;
 }
 
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem; /* Reduced padding for smaller screens */
+}
+
+@media (min-width: 600px) {
+  #root {
+    padding: 2rem; /* Restore larger padding for larger screens */
+  }
 } 

@@ -1,22 +1,38 @@
 .grocery-list {
   max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
   background-color: #f8f9fa;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+@media (min-width: 600px) {
+  .grocery-list {
+    margin: 2rem auto;
+    padding: 2rem;
+  }
+}
+
 h1 {
   text-align: center;
   color: #2c3e50;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
 }
 
 form {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 input[type="text"] {
@@ -25,6 +41,7 @@ input[type="text"] {
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
+  min-width: 0;
 }
 
 button {
@@ -43,14 +60,17 @@ button:hover {
 ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 li {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.5rem;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
   border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
+  word-break: break-word;
 }
 
 li:last-child {
@@ -60,6 +80,24 @@ li:last-child {
 .completed {
   text-decoration: line-through;
   color: #6c757d;
+  flex-grow: 1;
+  margin-right: 0.5rem;
+}
+
+li > span:not(.completed):not(.added-by) {
+  flex-grow: 1;
+  margin-right: 0.5rem;
+}
+
+.added-by {
+  font-size: 0.75rem;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 li button {
@@ -68,6 +106,8 @@ li button {
   padding: 0;
   font-size: 1rem;
   cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
 }
 
 .loading {
@@ -75,10 +115,4 @@ li button {
   padding: 2rem;
   font-size: 1.2rem;
   color: #6c757d;
-}
-
-.added-by {
-  font-size: 0.8rem;
-  color: #666;
-  margin-left: 1rem;
 } 
