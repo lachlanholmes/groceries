@@ -1,0 +1,116 @@
+.photo-capture {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.photo-capture h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.capture-start {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.camera-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.camera-preview {
+  width: 100%;
+  max-height: 50vh;
+  object-fit: cover;
+  background-color: #000;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.camera-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.capture-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.capture-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.secondary-button {
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: #6c757d;
+  border: 1px solid #6c757d;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.primary-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.ingredients-selection {
+  width: 100%;
+}
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+  max-height: 50vh;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+}
+
+.ingredient-item {
+  padding: 0.75rem;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  align-items: center;
+}
+
+.ingredient-item:last-child {
+  border-bottom: none;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+} 
